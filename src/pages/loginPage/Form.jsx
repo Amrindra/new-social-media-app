@@ -5,14 +5,14 @@ import {
   TextField,
   useMediaQuery,
   Typography,
-  useTheme
+  useTheme,
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "state";
+import { setLogin } from "globalState";
 import Dropzone from "react-dropzone";
 
 // Form validation using Yub and Formik
@@ -23,12 +23,12 @@ const registerSchema = yup.object().shape({
   password: yup.string().required("required"),
   location: yup.string().required("required"),
   occupation: yup.string().required("required"),
-  picture: yup.string().required("required")
+  picture: yup.string().required("required"),
 });
 
 const loginSchema = yup.object().shape({
   email: yup.string().email("invalid email").required("required"),
-  password: yup.string().required("required")
+  password: yup.string().required("required"),
 });
 
 const initialValuesRegister = {
@@ -38,12 +38,12 @@ const initialValuesRegister = {
   password: "",
   location: "",
   occupation: "",
-  picture: ""
+  picture: "",
 };
 
 const initialValuesLogin = {
   email: "",
-  password: ""
+  password: "",
 };
 
 const Form = () => {
@@ -72,7 +72,7 @@ const Form = () => {
         handleChange,
         handleSubmit,
         setFieldValue,
-        resetForm
+        resetForm,
       }) => (
         <form onSubmit={handleSubmit}>
           <Box
@@ -80,7 +80,7 @@ const Form = () => {
             gap="30px"
             gridTemplateColumns="repeat(4, minmax(0, 1fr))"
             sx={{
-              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" }
+              "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
             }}
           >
             {isRegister && (
