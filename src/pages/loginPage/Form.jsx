@@ -79,6 +79,26 @@ const Form = () => {
     }
   };
 
+  const login = async (values, onSubmitProps) => {
+    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(values)
+    });
+    const loggedIn = await loggedInResponse.json();
+    onSubmitProps.resetForm();
+    if (loggedIn) {
+      dispatch(
+        // This setLogin function is from the redux globalState
+        setLogin({
+          user: loggedIn.user,
+          token: loggedIn.token
+        })
+      );
+      navigate("/home");
+    }
+  };
+
   //This handle function is usded to handle login or register page
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) {
